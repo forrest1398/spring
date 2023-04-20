@@ -43,5 +43,4 @@ public class Food {
     public String getStoreLocation() {
         return storeLocation;
     }
-
 }
