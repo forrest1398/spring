@@ -1,32 +1,37 @@
 package com.example.demo.domain.food;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 @Repository
 public class FoodRepository {
-    
-    private static Map<Long, Food> store = new HashMap<>();
-    private static long sequence = 0L;
 
-    public Food save(Food food) {
-        food.setId(++sequence);
-        store.put(food.getId(), food);
-        return food;
+    private final EntityManager em;
+
+    public FoodRepository(EntityManager em) {
+        this.em = em;
     }
 
-    public List<Food> findAll() {
-        return new ArrayList<>(store.values());
+    public FoodEntity save(FoodEntity foodentity) {
+        em.persist(foodentity);
+        return foodentity;
     }
 
-    public Optional<Food> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public Optional<FoodEntity> findById(Long id) {
+        FoodEntity foodentity =  em.find(FoodEntity.class,id);
+        return Optional.ofNullable(foodentity);
     }
 
-    public Optional<Food> findByName(String name) {
-        return store.values().stream()
-                .filter(member -> member.getName().equals(name))
-                .findAny();
+    public Optional<FoodEntity> findByName(String name) {
+        List<FoodEntity> result = em.createQuery("select m from FoodEntity m where m.name =:name", FoodEntity.class).setParameter("name",name)
+                .getResultList();
+        return result.stream().findAny();
     }
-    
+
+    public List<FoodEntity> findAll() {
+        List<FoodEntity> result = em.createQuery("select f from FoodEntity f", FoodEntity.class).getResultList();
+        return result;
+    }
+
 }

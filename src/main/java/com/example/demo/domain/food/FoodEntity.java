@@ -1,12 +1,21 @@
 package com.example.demo.domain.food;
 
+import jakarta.persistence.*;
 
-public class Food {
+@Entity
+@Table(name = "FOOD")
+public class FoodEntity {
 
+    @Id
+    @GeneratedValue
     private long id;
+    @Column(name = "PRICE")
     private int price;
+    @Column(name = "NAME")
     private String name;
-    private String contents;
+    @Column(name = "COMMENTS")
+    private String comments;
+    @Column(name = "STORELOCATION")
     private String storeLocation;
 
     public void setId(long id) {
@@ -30,11 +39,11 @@ public class Food {
         return price;
     }
 
-    public void setContents(String contents) {
-        this.contents = contents;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
-    public String getContents() {
-        return contents;
+    public String getComments() {
+        return comments;
     }
 
     public void setStoreLocation(String storeLocation) {
