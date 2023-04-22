@@ -1,12 +1,12 @@
 package com.example.demo.domain.food;
 
 
-public class Food {
+public class FoodForm {
 
     private long id;
     private int price;
     private String name;
-    private String contents;
+    private String comments;
     private String storeLocation;
 
     public void setId(long id) {
@@ -30,11 +30,11 @@ public class Food {
         return price;
     }
 
-    public void setContents(String contents) {
-        this.contents = contents;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
-    public String getContents() {
-        return contents;
+    public String getComments() {
+        return comments;
     }
 
     public void setStoreLocation(String storeLocation) {
