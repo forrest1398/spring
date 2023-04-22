@@ -5,7 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-Welcome!!
-<a href="/food">food</a>
+Welcome!!<br>
+<a href="/foods/list">food list</a><br>
+<a href="/foods/new">create food</a><br>
+<form action="/foods/find" method="post">
+    음식 이름 :<input type="text" id="name"name="name">
+    <button type="submit">조회</button>
+</form>
 </body>
 </html>

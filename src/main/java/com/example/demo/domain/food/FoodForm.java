@@ -1,20 +1,12 @@
 package com.example.demo.domain.food;
 
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "FOOD")
-public class FoodEntity {
+public class FoodForm {
 
-    @Id
     private long id;
-    @Column(name = "PRICE")
     private int price;
-    @Column(name = "NAME")
     private String name;
-    @Column(name = "COMMENTS")
     private String comments;
-    @Column(name = "STORELOCATION")
     private String storeLocation;
 
     public void setId(long id) {
