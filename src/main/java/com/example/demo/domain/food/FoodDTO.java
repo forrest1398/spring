@@ -1,12 +1,14 @@
 package com.example.demo.domain.food;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class FoodForm {
-    private long id;
+@Setter
+@Builder
+public class FoodDTO {
+
     private int price;
     private String name;
     private String comments;

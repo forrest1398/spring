@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Optional;
-
 @Controller
 public class FoodController {
 
@@ -24,7 +21,7 @@ public class FoodController {
     //음식 리스트 확인
     @GetMapping("foods/list")
     @ResponseBody
-    public List<FoodEntity> foodList(){
+    public List<FoodDTO> foodList(){
         return foodService.showList();
     }
 
@@ -36,15 +33,13 @@ public class FoodController {
     @PostMapping("foods/new")
     public String create(FoodForm form){
 
-        FoodEntity foodEntity = new FoodEntity();
+        FoodDTO foodDTO = FoodDTO.builder()
+                .price(form.getPrice())
+                .name(form.getName())
+                .comments(form.getComments())
+                .storeLocation(form.getStoreLocation()).build();
 
-        foodEntity.setId(form.getId());
-        foodEntity.setPrice(form.getPrice());
-        foodEntity.setName(form.getName());
-        foodEntity.setComments(form.getComments());
-        foodEntity.setStoreLocation(form.getStoreLocation());
-
-        foodService.join(foodEntity);
+        foodService.join(form.getId(),foodDTO);
 
         return "redirect:/";
     }
@@ -52,7 +47,7 @@ public class FoodController {
     //음식 조회 요청
     @PostMapping("foods/find")
     @ResponseBody
-    public Optional<FoodEntity> findFood(FoodForm form){
+    public FoodDTO findFood(FoodForm form){
         return foodService.findFood(form.getName());
     }
 
