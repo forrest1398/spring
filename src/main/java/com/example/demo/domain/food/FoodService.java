@@ -1,7 +1,5 @@
 package com.example.demo.domain.food;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,27 +19,26 @@ public class FoodService {
     }
 
     //음식 리스트 기능
-    public List<FoodEntity> showList(){
+    public List<FoodDTO> showList(){
         return foodRepository.findAll();
     }
 
     //음식 조회 기능
-    public Optional<FoodEntity> findFood(String name){
+    public FoodDTO findFood(String name){
         return foodRepository.findByName(name);
     }
 
     //음식 등록 기능
-    public String join(FoodEntity foodEntity){
+    public void join(long id,FoodDTO foodDTO){
+
         //음식 이름 중복 검증
-        foodRepository.findByName(foodEntity.getName()).
+        Optional.ofNullable(foodRepository.findByName(foodDTO.getName())).
             ifPresent(f->{
                 //중복시 예외처리
                 throw new IllegalStateException("Error : already have same name food");
             });
-        foodRepository.save(foodEntity);
 
-        return foodEntity.getName();
-
+        foodRepository.save(id,foodDTO);
     }
 
 }
