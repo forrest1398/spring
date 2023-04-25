@@ -13,7 +13,7 @@ public class FoodRepository {
     }
 
     // Entity -> DTO 변환 함수
-    public FoodDTO EntityToDTO(FoodEntity foodEntity){
+    public FoodDTO changeEntityToDTO(FoodEntity foodEntity){
         FoodDTO foodDTO = FoodDTO.builder()
                 .price(foodEntity.getPrice())
                 .name(foodEntity.getName())
@@ -22,13 +22,13 @@ public class FoodRepository {
         return foodDTO;
     }
 
-    public void save(long id,FoodDTO foodDTO) {
+    public void save(FoodDTO foodDTO) {
         FoodEntity foodEntity = new FoodEntity();
-        foodEntity.setId(id);
         foodEntity.setPrice(foodDTO.getPrice());
         foodEntity.setName(foodDTO.getName());
         foodEntity.setComments(foodDTO.getComments());
         foodEntity.setStoreLocation(foodDTO.getStoreLocation());
+        System.out.println("---------here---------");
         em.persist(foodEntity);
     }
 
@@ -41,7 +41,7 @@ public class FoodRepository {
         List<FoodEntity> result = em.createQuery("select m from FoodEntity m where m.name =:name", FoodEntity.class).setParameter("name",name)
                 .getResultList();
         if(result.stream().findAny().isEmpty())return null;
-        else return EntityToDTO(result.get(0));
+        else return changeEntityToDTO(result.get(0));
     }
 
     public List<FoodDTO> findAll() {
@@ -49,7 +49,7 @@ public class FoodRepository {
         //Entity -> Dto 변환
         List<FoodDTO> result = new ArrayList<>();
         for(FoodEntity foodEntity : AllEntity){
-            result.add(EntityToDTO(foodEntity));
+            result.add(changeEntityToDTO(foodEntity));
         }
         return result;
     }

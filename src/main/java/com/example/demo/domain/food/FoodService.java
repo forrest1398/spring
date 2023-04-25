@@ -29,7 +29,7 @@ public class FoodService {
     }
 
     //음식 등록 기능
-    public void join(long id,FoodDTO foodDTO){
+    public void joinNewFood(FoodDTO foodDTO){
 
         //음식 이름 중복 검증
         Optional.ofNullable(foodRepository.findByName(foodDTO.getName())).
@@ -38,7 +38,7 @@ public class FoodService {
                 throw new IllegalStateException("Error : already have same name food");
             });
 
-        foodRepository.save(id,foodDTO);
+        foodRepository.save(foodDTO);
     }
 
 }

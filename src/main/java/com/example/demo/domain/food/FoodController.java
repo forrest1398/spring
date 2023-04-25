@@ -17,12 +17,18 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-
-    //음식 리스트 확인
+    //음식 전체 리스트 확인
     @GetMapping("foods/list")
     @ResponseBody
-    public List<FoodDTO> foodList(){
+    public List<FoodDTO> showFoodList(){
         return foodService.showList();
+    }
+
+    //음식 조회 요청
+    @PostMapping("foods/find")
+    @ResponseBody
+    public FoodDTO findFood(FoodDTO foodDTO){
+        return foodService.findFood(foodDTO.getName());
     }
 
     //음식 등록
@@ -30,25 +36,14 @@ public class FoodController {
     public String createForm(){
         return "foods/createFoodForm";
     }
+
     @PostMapping("foods/new")
-    public String create(FoodForm form){
+    public String createFood(FoodDTO foodDTO){
 
-        FoodDTO foodDTO = FoodDTO.builder()
-                .price(form.getPrice())
-                .name(form.getName())
-                .comments(form.getComments())
-                .storeLocation(form.getStoreLocation()).build();
-
-        foodService.join(form.getId(),foodDTO);
+        foodService.joinNewFood(foodDTO);
 
         return "redirect:/";
     }
 
-    //음식 조회 요청
-    @PostMapping("foods/find")
-    @ResponseBody
-    public FoodDTO findFood(FoodForm form){
-        return foodService.findFood(form.getName());
-    }
 
 }
