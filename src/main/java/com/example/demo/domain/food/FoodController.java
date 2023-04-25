@@ -33,15 +33,32 @@ public class FoodController {
 
     //음식 등록
     @GetMapping("foods/new")
-    public String createForm(){
+    public String createNewFoodForm(){
         return "foods/createFoodForm";
     }
 
     @PostMapping("foods/new")
-    public String createFood(FoodDTO foodDTO){
-
+    public String createNewFood(FoodDTO foodDTO){
         foodService.joinNewFood(foodDTO);
+        return "redirect:/";
+    }
 
+    //음식 삭제
+    @PostMapping("foods/remove")
+    public String removeFood(FoodDTO foodDTO){
+        foodService.removeFood(foodDTO.getName());
+        return "redirect:/";
+    }
+
+    //음식 수정
+    @GetMapping("foods/change")
+    public String createChangeFoodForm(){
+        return "foods/changeFoodForm";
+    }
+
+    @PostMapping("foods/change")
+    public String changeFood(FoodDTO foodDTO){
+        foodService.changeFood(foodDTO);
         return "redirect:/";
     }
 
