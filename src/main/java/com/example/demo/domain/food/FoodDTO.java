@@ -6,12 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 public class FoodDTO {
-
     private int price;
     private String name;
     private String comments;
     private String storeLocation;
-
 }

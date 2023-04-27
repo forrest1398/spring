@@ -13,43 +13,72 @@ public class FoodRepository {
     }
 
     // Entity -> DTO 변환 함수
-    public FoodDTO EntityToDTO(FoodEntity foodEntity){
-        FoodDTO foodDTO = FoodDTO.builder()
-                .price(foodEntity.getPrice())
-                .name(foodEntity.getName())
-                .comments(foodEntity.getComments())
-                .storeLocation(foodEntity.getStoreLocation()).build();
+    public FoodDTO changeEntityToDTO(FoodEntity foodEntity){
+        FoodDTO foodDTO = new FoodDTO();
+        foodDTO.setPrice(foodEntity.getPrice());
+        foodDTO.setName(foodEntity.getName());
+        foodDTO.setComments(foodEntity.getComments());
+        foodDTO.setStoreLocation(foodEntity.getStoreLocation());
         return foodDTO;
     }
 
-    public void save(long id,FoodDTO foodDTO) {
+    // DTO -> Entity 변환 함수
+    public FoodEntity changeDTOTOEntity(FoodDTO foodDTO){
         FoodEntity foodEntity = new FoodEntity();
-        foodEntity.setId(id);
         foodEntity.setPrice(foodDTO.getPrice());
         foodEntity.setName(foodDTO.getName());
         foodEntity.setComments(foodDTO.getComments());
         foodEntity.setStoreLocation(foodDTO.getStoreLocation());
+        return foodEntity;
+    }
+
+    public void save(FoodDTO foodDTO) {
+        FoodEntity foodEntity = changeDTOTOEntity(foodDTO);
         em.persist(foodEntity);
     }
 
-    public Optional<FoodEntity> findById(Long id) {
+    public void remove(String name){
+        List<FoodEntity> result = em.createQuery("select m from FoodEntity m where m.name =:name", FoodEntity.class).setParameter("name",name)
+                .getResultList();
+        if(!result.stream().findAny().isEmpty())
+            em.remove(result.get(0));
+    }
+
+    public void change(FoodDTO foodDTO){
+        List<FoodEntity> result = em.createQuery("select m from FoodEntity m where m.name =:name", FoodEntity.class).setParameter("name",foodDTO.getName())
+                .getResultList();
+        if(!result.stream().findAny().isEmpty()) {
+            FoodEntity target = result.get(0);
+            target.setPrice(foodDTO.getPrice());
+            target.setName(foodDTO.getName());
+            target.setComments(foodDTO.getComments());
+            target.setStoreLocation(foodDTO.getStoreLocation());
+            em.merge(target);
+        }
+    }
+
+    public Optional<FoodDTO> findById(Long id) {
         FoodEntity foodentity =  em.find(FoodEntity.class,id);
-        return Optional.ofNullable(foodentity);
+        FoodDTO foodDTO = changeEntityToDTO(foodentity);
+        return Optional.ofNullable(foodDTO);
     }
 
     public FoodDTO findByName(String name) {
         List<FoodEntity> result = em.createQuery("select m from FoodEntity m where m.name =:name", FoodEntity.class).setParameter("name",name)
                 .getResultList();
-        if(result.stream().findAny().isEmpty())return null;
-        else return EntityToDTO(result.get(0));
+        if(result.stream().findAny().isEmpty())
+            return null;
+        else {
+            FoodDTO foodDTO = changeEntityToDTO(result.get(0));
+            return foodDTO;
+        }
     }
 
     public List<FoodDTO> findAll() {
-        List<FoodEntity> AllEntity = em.createQuery("select f from FoodEntity f", FoodEntity.class).getResultList();
-        //Entity -> Dto 변환
+        List<FoodEntity> AllEntities = em.createQuery("select f from FoodEntity f", FoodEntity.class).getResultList();
         List<FoodDTO> result = new ArrayList<>();
-        for(FoodEntity foodEntity : AllEntity){
-            result.add(EntityToDTO(foodEntity));
+        for(FoodEntity foodEntity : AllEntities){
+            result.add(changeEntityToDTO(foodEntity));
         }
         return result;
     }

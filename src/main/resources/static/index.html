@@ -8,9 +8,14 @@
 Welcome!!<br>
 <a href="/foods/list">food list</a><br>
 <a href="/foods/new">create food</a><br>
+<a href="/foods/change">change food</a><br>
 <form action="/foods/find" method="post">
-    음식 이름 :<input type="text" id="name"name="name">
+    음식 이름 :<input type="text" id="findfoodname"name="name">
     <button type="submit">조회</button>
+</form>
+<form action="/foods/remove" method="post">
+    음식 이름 :<input type="text" id="removefoodname"name="name">
+    <button type="submit">삭제</button>
 </form>
 </body>
 </html>

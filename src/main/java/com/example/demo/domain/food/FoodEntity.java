@@ -11,14 +11,19 @@ import lombok.Setter;
 public class FoodEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
+
     @Column(name = "PRICE")
     private int price;
+
     @Column(name = "NAME")
     private String name;
+
     @Column(name = "COMMENTS")
     private String comments;
+
     @Column(name = "STORELOCATION")
     private String storeLocation;
 
