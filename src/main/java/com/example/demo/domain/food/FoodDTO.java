@@ -7,8 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FoodDTO {
+
     private int price;
     private String name;
     private String comments;
     private String storeLocation;
+
 }

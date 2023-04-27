@@ -1,5 +1,6 @@
 package com.example.demo.domain.food;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
@@ -44,7 +45,7 @@ public class FoodRepository {
             em.remove(result.get(0));
     }
 
-    public void change(FoodDTO foodDTO){
+    public void update(FoodDTO foodDTO){
         List<FoodEntity> result = em.createQuery("select m from FoodEntity m where m.name =:name", FoodEntity.class).setParameter("name",foodDTO.getName())
                 .getResultList();
         if(!result.stream().findAny().isEmpty()) {
@@ -57,21 +58,41 @@ public class FoodRepository {
         }
     }
 
-    public Optional<FoodDTO> findById(Long id) {
+    public void updatev2(Long id,FoodDTO foodDTO){
+        FoodEntity target = findEntityById(id);
+        target.setPrice(foodDTO.getPrice());
+        target.setName(foodDTO.getName());
+        target.setComments(foodDTO.getComments());
+        target.setStoreLocation(foodDTO.getStoreLocation());
+        em.merge(target);
+    }
+
+    public Optional<FoodDTO> findDTOById(Long id) {
         FoodEntity foodentity =  em.find(FoodEntity.class,id);
         FoodDTO foodDTO = changeEntityToDTO(foodentity);
         return Optional.ofNullable(foodDTO);
     }
 
-    public FoodDTO findByName(String name) {
+    public FoodEntity findEntityByName(String name) {
         List<FoodEntity> result = em.createQuery("select m from FoodEntity m where m.name =:name", FoodEntity.class).setParameter("name",name)
                 .getResultList();
-        if(result.stream().findAny().isEmpty())
+        if(result.stream().findAny().isEmpty())return null;
+        else return result.get(0);
+    }
+
+    public FoodEntity findEntityById(Long id) {
+        FoodEntity foodentity =  em.find(FoodEntity.class,id);
+        return foodentity;
+    }
+
+
+    public FoodDTO findDTOByName(String name) {
+        FoodEntity foodEntity = findEntityByName(name);
+        if(!Optional.ofNullable(foodEntity).isPresent()) {
             return null;
-        else {
-            FoodDTO foodDTO = changeEntityToDTO(result.get(0));
-            return foodDTO;
         }
+        FoodDTO foodDTO = changeEntityToDTO(foodEntity);
+        return foodDTO;
     }
 
     public List<FoodDTO> findAll() {
@@ -81,6 +102,14 @@ public class FoodRepository {
             result.add(changeEntityToDTO(foodEntity));
         }
         return result;
+    }
+
+    public Long findIdByName(String name){
+        FoodEntity foodEntity = findEntityByName(name);
+        if(Optional.ofNullable(foodEntity).isPresent()) {
+            return foodEntity.getId();
+        }
+        else return null;
     }
 
 }

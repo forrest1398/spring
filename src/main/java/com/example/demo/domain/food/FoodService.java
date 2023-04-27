@@ -18,33 +18,47 @@ public class FoodService {
         this.foodRepository = foodRepository;
     }
 
-    // 음식 리스트 기능
+
     public List<FoodDTO> showList(){
         return foodRepository.findAll();
     }
 
-    // 음식 조회 기능
-    public FoodDTO findFood(String name){
-        return foodRepository.findByName(name);
+
+    public Optional<FoodDTO> findFoodDTOById(long id){
+        return foodRepository.findDTOById(id);
     }
 
-    // 음식 등록 기능
+
     public void joinNewFood(FoodDTO foodDTO){
         //음식 이름 중복 검증
-        Optional.ofNullable(foodRepository.findByName(foodDTO.getName())).
+        Optional.ofNullable(foodRepository.findDTOByName(foodDTO.getName())).
             ifPresent(f->{
                 throw new IllegalStateException("Error : already have same name food");
             });
         foodRepository.save(foodDTO);
     }
 
-    // 음식 삭제 기능
+
     public void removeFood(String name){
         foodRepository.remove(name);
     }
 
-    //음식 수정 기능
+
     public void changeFood(FoodDTO foodDTO){
-        foodRepository.change(foodDTO);
+        foodRepository.update(foodDTO);
     }
+
+    public void changeFoodv2(Long id,FoodDTO newone){
+        foodRepository.updatev2(id,newone);
+    }
+
+    public Long findFoodIdByName(String name){
+        if(Optional.ofNullable(foodRepository.findIdByName(name)).isPresent()) {
+            long id = foodRepository.findIdByName(name);
+            return id;
+        }
+        else
+            return null;
+    }
+
 }
