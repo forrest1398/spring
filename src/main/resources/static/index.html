@@ -6,14 +6,15 @@
 </head>
 <body>
 Welcome!!<br>
-<a href="/foods/list">food list</a><br>
-<a href="/foods/new">create food</a><br>
-<a href="/foods/change">change food</a><br>
-<form action="/foods/find" method="post">
-    음식 이름 :<input type="text" id="findfoodname"name="name">
-    <button type="submit">조회</button>
+<a href="/foods">food list</a><br>
+<a href="/foods/newfood">create food</a><br>
+<a href="/foods/change">update food </a><br>
+<form action="/foods" method="post">
+    음식 이름 :<input type="text" id="foodname"name="name">
+    <button type="submit" onclick="window.open('address','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');">조회</button>
 </form>
-<form action="/foods/remove" method="post">
+<form  action="/foods" method="post">
+    <input type="hidden" name="_method" value="delete">
     음식 이름 :<input type="text" id="removefoodname"name="name">
     <button type="submit">삭제</button>
 </form>

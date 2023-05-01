@@ -27,4 +27,14 @@ public class FoodEntity {
     @Column(name = "STORELOCATION")
     private String storeLocation;
 
+    // Entity -> DTO 변환 함수
+    public FoodDTO changeEntityToDTO(){
+        FoodDTO foodDTO = new FoodDTO();
+        foodDTO.setPrice(this.getPrice());
+        foodDTO.setName(this.getName());
+        foodDTO.setComments(this.getComments());
+        foodDTO.setStoreLocation(this.getStoreLocation());
+        return foodDTO;
+    }
+
 }
