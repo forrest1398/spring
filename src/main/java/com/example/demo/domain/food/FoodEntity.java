@@ -27,6 +27,7 @@ public class FoodEntity {
     @Column(name = "STORELOCATION")
     private String storeLocation;
 
+
     // Entity -> DTO 변환 함수
     public FoodDTO changeEntityToDTO(){
         FoodDTO foodDTO = new FoodDTO();
