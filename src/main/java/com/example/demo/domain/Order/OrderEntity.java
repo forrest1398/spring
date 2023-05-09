@@ -20,15 +20,15 @@ public class OrderEntity {
     @Column(name = "ORDER_ID")
     private long id;
 
-    @Column(name = "ADRESS")
-    private String adress;
+    @Column(name = "ADDRESS")
+    private String address;
 
     @Column(name = "STATUS")
     private String status;
 
     public OrderDTO changeEntityToDTO(){
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setAdress(this.getAdress());
+        orderDTO.setAddress(this.getAddress());
         orderDTO.setStatus(this.getStatus());
         return orderDTO;
     }

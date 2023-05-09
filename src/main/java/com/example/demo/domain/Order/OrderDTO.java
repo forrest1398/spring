@@ -13,12 +13,12 @@ import java.util.List;
 @Setter
 public class OrderDTO {
 
-    private String adress;
+    private String address;
     private String status;
 
     public OrderEntity changeDTOToEntity(){
         OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setAdress(this.getAdress());
+        orderEntity.setAddress(this.getAddress());
         orderEntity.setStatus(this.getStatus());
         return orderEntity;
     }
