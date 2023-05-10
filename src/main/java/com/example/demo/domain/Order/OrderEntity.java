@@ -1,17 +1,10 @@
 package com.example.demo.domain.Order;
 
-import com.example.demo.domain.food.FoodDTO;
-import com.example.demo.domain.food.FoodEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
-@Setter
 @Getter
 public class OrderEntity {
 
@@ -25,6 +18,16 @@ public class OrderEntity {
 
     @Column(name = "STATUS")
     private String status;
+
+    public void createOrder(String address,String status){
+        this.address=address;
+        this.status=status;
+    }
+
+    public void updateOrder(String address,String status){
+        this.address=address;
+        this.status=status;
+    }
 
     public OrderDTO changeEntityToDTO(){
         OrderDTO orderDTO = new OrderDTO();

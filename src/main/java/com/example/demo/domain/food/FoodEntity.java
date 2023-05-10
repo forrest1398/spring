@@ -3,7 +3,6 @@ package com.example.demo.domain.food;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
@@ -27,6 +26,7 @@ public class FoodEntity {
     @Column(name = "STORELOCATION")
     private String storeLocation;
 
+
     public void createFoodEntity(int price , String name , String comments , String storeLocation){
         this.price=price;
         this.name=name;
@@ -41,7 +41,6 @@ public class FoodEntity {
         this.storeLocation=storeLocation;
     }
 
-    // Entity -> DTO 변환 함수
     public FoodDTO changeEntityToDTO(){
         FoodDTO foodDTO = new FoodDTO();
         foodDTO.setPrice(this.getPrice());

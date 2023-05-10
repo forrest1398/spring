@@ -1,9 +1,11 @@
 package com.example.demo.domain.Order;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "ORDERED_FOOD")
+@Getter
 public class OrderedFoodEntity {
 
     @Id
@@ -16,5 +18,10 @@ public class OrderedFoodEntity {
 
     @Column(name = "ORDER_ID")
     private String orderId;
+
+    public void updateOrderedFood(String orderId , String foodId){
+        this.orderId=orderId;
+        this.foodId=foodId;
+    }
 
 }

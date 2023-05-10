@@ -12,7 +12,6 @@ public class FoodDTO {
     private String comments;
     private String storeLocation;
 
-    // DTO -> Entity 변환 함수
     public FoodEntity changeDTOToEntity(){
         FoodEntity foodEntity = new FoodEntity();
                 foodEntity.createFoodEntity(
