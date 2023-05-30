@@ -1,12 +1,11 @@
 package com.example.demo.domain.food;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "FOOD")
 public class FoodEntity {
 
@@ -28,7 +27,20 @@ public class FoodEntity {
     private String storeLocation;
 
 
-    // Entity -> DTO 변환 함수
+    public void createFoodEntity(int price , String name , String comments , String storeLocation){
+        this.price=price;
+        this.name=name;
+        this.comments=comments;
+        this.storeLocation=storeLocation;
+    }
+
+    public void updateFoodEntity(int price , String name , String comments , String storeLocation){
+        this.price=price;
+        this.name=name;
+        this.comments=comments;
+        this.storeLocation=storeLocation;
+    }
+
     public FoodDTO changeEntityToDTO(){
         FoodDTO foodDTO = new FoodDTO();
         foodDTO.setPrice(this.getPrice());

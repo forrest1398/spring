@@ -27,20 +27,23 @@ public class FoodRepository {
     public void update(FoodDTO foodDTO){
         FoodEntity target = em.find(FoodEntity.class,findIdByName(foodDTO.getName()));
         if(target != null){
-            target.setPrice(foodDTO.getPrice());
-            target.setName(foodDTO.getName());
-            target.setComments(foodDTO.getComments());
-            target.setStoreLocation(foodDTO.getStoreLocation());
+            target.updateFoodEntity(
+                    foodDTO.getPrice(),
+                    foodDTO.getName(),
+                    foodDTO.getComments(),
+                    foodDTO.getStoreLocation());
             em.merge(target);
         }
     }
 
     public void updateV2(Long id, FoodDTO foodDTO){
         FoodEntity target = findEntityById(id);
-        target.setPrice(foodDTO.getPrice());
-        target.setName(foodDTO.getName());
-        target.setComments(foodDTO.getComments());
-        target.setStoreLocation(foodDTO.getStoreLocation());
+        target.updateFoodEntity(
+                foodDTO.getPrice(),
+                foodDTO.getName(),
+                foodDTO.getComments(),
+                foodDTO.getStoreLocation());
+        em.merge(target);
         em.merge(target);
     }
 

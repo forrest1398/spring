@@ -12,13 +12,13 @@ public class FoodDTO {
     private String comments;
     private String storeLocation;
 
-    // DTO -> Entity 변환 함수
     public FoodEntity changeDTOToEntity(){
         FoodEntity foodEntity = new FoodEntity();
-        foodEntity.setPrice(this.getPrice());
-        foodEntity.setName(this.getName());
-        foodEntity.setComments(this.getComments());
-        foodEntity.setStoreLocation(this.getStoreLocation());
+                foodEntity.createFoodEntity(
+                this.price,
+                this.name,
+                this.comments,
+                this.storeLocation);
         return foodEntity;
     }
 
